@@ -1,38 +1,95 @@
-.App {
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0f0f0f;
+  color: #f0e6d2;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-container {
+  min-height: 80vh;
+  padding: 40px 20px;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.logo {
+  width: 450px;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.description {
+  max-width: 600px;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.status {
+  font-size: 1.1rem;
+  color: #facc15;
+  margin-bottom: 30px;
+}
+
+.button-group {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button {
+  background-color: #a67926;
   color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.button:hover {
+  background-color: #c7923e;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+footer {
+  font-size: 0.8rem;
+  color: #aaa;
+  max-width: 600px;
+}
+
+
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .logo {
+    width: 440px; /* 450px + 20% = 540px */
   }
-  to {
-    transform: rotate(360deg);
+
+  .description,
+  .status,
+  .subtitle,
+  footer {
+    font-size: 1.8rem !important;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  .button {
+    font-size: 1.5rem;
   }
 }
