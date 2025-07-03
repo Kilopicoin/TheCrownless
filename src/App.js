@@ -15,6 +15,26 @@ function App() {
 
       <p className="status">⚔️ Pre-Sale will start on the 1st of September 2025</p>
 
+
+      <div className="social-icons">
+  <a href="https://www.instagram.com/thecrownlessx/" target="_blank" rel="noopener noreferrer">
+    <img src={require('./assets/instagram.png')} alt="Instagram" />
+  </a>
+  <a href="https://www.youtube.com/@thecrownlessX" target="_blank" rel="noopener noreferrer">
+    <img src={require('./assets/youtube.png')} alt="YouTube" />
+  </a>
+  <a href="https://x.com/thecrownlessX" target="_blank" rel="noopener noreferrer">
+    <img src={require('./assets/twitter.png')} alt="Twitter" />
+  </a>
+  <a href="https://www.linkedin.com/company/the-crownless/" target="_blank" rel="noopener noreferrer">
+    <img src={require('./assets/linkedin.png')} alt="LinkedIn" />
+  </a>
+  <a href="https://t.me/thecrownlessX" target="_blank" rel="noopener noreferrer">
+    <img src={require('./assets/telegram.png')} alt="Telegram" />
+  </a>
+</div>
+
+
     </div>
   );
 }
