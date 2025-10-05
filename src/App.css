@@ -11,6 +11,11 @@
   --ink:#d7dbe0;
   --clr-accent-gold: var(--gold);
   --clr-accent-flame: var(--ember-2);
+   --radius-soft: 16px;
+  --elev-map-1: 0 6px 24px rgba(0,0,0,.35);
+  --elev-map-2: 0 18px 60px rgba(0,0,0,.35);
+  --border-gold: rgba(229,199,107,.28);
+  --border-gold-soft: rgba(229,199,107,.18);
 }
 
 /* Base */
@@ -310,16 +315,6 @@ body{
   flex-direction: column;
   align-items: center;
   padding: 80px 20px;
-}
-
-/* Wrapper: chart + table side by side */
-.tokenomics-wrapper {
-  display: flex;
-  gap: 90px; /* more breathing room */
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
 }
 
 /* Make pie chart bigger */
@@ -901,24 +896,19 @@ body{
 .map-wrap{
   position: relative;
   display: block;              /* was inline-block (ok too, but block + auto margins is simpler) */
-  width: clamp(336px, 96vw, 984px);  /* ← adjust the max (820px) to taste */
   margin: 0 auto;              /* center within the row */
-  border-radius: var(--radius-soft);
+  border-radius: 30px;
   overflow: hidden;
   /* margin-left: 60px;  ← remove this line */
 }
 
+.map-wrap,
+.map-info { min-width: 0; }
   
   .map-img{ width: 100%; height: auto; display: block; }
   
   /* ---------- PİN  (dot + etiket) ---------- */
-  .place-pin{
-    position:absolute;
-    transform:translate(-50%,-50%);
-    background:none; border:none; cursor:pointer;
-    display:flex; flex-direction:column; align-items:center;
-    gap:.15rem;
-  }
+
  
   @keyframes pulse{
     0%,100%{ transform:scale(1);   opacity:.8; }
@@ -938,30 +928,6 @@ body{
     font-size: 11px;
   }
   
-  /* ---------- AÇILIR KART ---------- */
-  .place-card{
-    position:absolute;
-    min-width:180px;
-    max-width:240px;
-    transform:translateY(-50%);
-    padding:var(--gap-s) var(--gap-m);
-    background:rgba(26,26,26,.85);
-    backdrop-filter:blur(6px);
-    border:1px solid var(--clr-border);
-    border-radius:var(--radius-soft);
-    z-index:20;
-    animation:fade-slide-up var(--dur-medium) ease forwards;
-  }
-  .place-card h4{
-    margin:0 0 .4rem;
-    font:700 1rem "Cinzel",serif;
-    color:var(--clr-accent-gold);
-  }
-  .place-card p{
-    margin:0;
-    font-size:.85rem;
-    color:var(--clr-text-sub);
-  }
 
 
 /* ───────────── “Tüm etiketler” ipucu modu ───────────── */
@@ -1041,16 +1007,17 @@ body{
 .place-card{
   position:absolute; min-width:180px; max-width:240px;
   transform:translateY(-50%);
-  padding:var(--gap-s) var(--gap-m);
+  padding:10px;
   background:rgba(26,26,26,.85); backdrop-filter:blur(6px);
   border:1px solid var(--clr-border); border-radius:var(--radius-soft);
   z-index:20; animation:fade-slide-up var(--dur-medium) ease forwards;
   box-shadow: 0 10px 26px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,72,0,.12);
+  text-align: center;
 }
 .place-card h4{
   margin:0 0 .4rem; font:700 1rem "Cinzel",serif; color:var(--clr-accent-gold);
 }
-.place-card p{ margin:0; font-size:.85rem; color:var(--clr-text-sub); }
+.place-card p{ margin:0; font-size:.75rem; color:var(--clr-text-sub); }
 /* Pin labels always visible */
 
 /* daha sola */
@@ -1090,4 +1057,206 @@ body{
 .map-teaser{
   display: flex;
   justify-content: center;
+}
+
+
+
+/* Default 2-col (desktop) stays as-is */
+.map-row{
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(320px, 1fr) 450px;
+  align-items: center;
+  padding: 20px;
+  padding-bottom: 60px;
+}
+
+/* Collapse to a single column under ~1200px */
+@media (max-width: 1100px){
+  .map-row{
+    grid-template-columns: 1fr;   /* map on top, info below */
+  }
+
+  /* Turn off sticky so it flows below the map */
+  .map-info{
+    position: static;
+    top: auto;
+    max-height: none;              /* let it grow naturally */
+  }
+
+  /* Let the map fill the column (no odd centering issues) */
+  .map-wrap{
+    width: 100%;
+    margin: 0;                     /* remove auto-centering here */
+  }
+}
+
+/* (Optional) tighter mobile tuning */
+@media (max-width: 640px){
+  .map-row{ gap: 18px; padding: 16px; padding-bottom: 30px;}
+  .map-info{ padding: 12px; }
+  .map-info__btn{ font-size: 13px; padding: 8px 12px; }
+  .map-info__desc{ font-size: 12px; padding: 6px 12px 10px; }
+}
+
+
+@media (min-width: 1201px){
+  .map-info{ position: sticky; top: 88px; }
+}
+
+
+/* Subtle red glow on the map border */
+.map-wrap--redglow{
+  border-radius: 22px;
+  border: 1px solid rgba(194,73,63,.35);
+  box-shadow:
+    0 10px 30px rgba(194,73,63,.20),  /* outer warm glow */
+    inset 0 0 0 1px rgba(255,72,0,.10); /* inner tint */
+  overflow: hidden;
+}
+
+/* ===== Right-hand info column ===== */
+.map-info{
+  position: sticky;
+  top: 88px; /* sit under sticky nav (match your roadmap sticky) */
+  align-self: center;
+
+  background: radial-gradient(120% 120% at 0% 0%, rgba(229,199,107,.06), transparent 60%),
+              rgba(0,0,0,.30);
+  border: 1px solid rgba(229,199,107,.14);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.35);
+  max-height: 72vh;
+  overflow: auto;
+}
+
+.map-info__header{
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom: 8px;
+}
+.map-info__title{
+  margin:0;
+  color: var(--gold);
+  font-weight: 800;
+  letter-spacing: .04em;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.map-info__list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.map-info__item{
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(229,199,107,.12);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s ease, transform .2s ease, background .2s ease;
+}
+
+.map-info__item.is-active{
+  border-color: rgba(255,72,0,.88);
+  background: rgba(255,72,0,.05);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(255,72,0,.08);
+}
+
+.map-info__btn{
+  font-size: 12px;
+  width: 100%;
+  text-align: center;
+  padding: 3px 12px;
+  background: transparent;
+  border: 0;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+.map-info__btn:hover{
+  color: #fff;
+}
+
+.map-info__desc{
+  padding: 0 12px 4px 12px;
+  font-size: 11px;
+  opacity: .9;
+  color: var(--ink);
+  border-top: 1px dashed rgba(229,199,107,.18);
+  text-align: center;
+}
+
+/* Keep your existing .map-wrap/.place-pin/.place-card rules.
+   We just removed the .regions-toggle / .regions-panel rules, which you can delete. */
+
+
+
+   /* Make all three blocks (chart + two tables) share the row and stay responsive */
+.tokenomics-wrapper {
+  display: flex;
+  gap: 90px;                 /* slightly tighter so 3-up fits easier */
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;           /* stack on smaller screens */
+}
+
+/* Size rules for each block */
+.tokenomics-chart { flex: 0 1 420px; }
+.tokenomics-table, .vesting-table {
+  flex: 1 1 380px;           /* grow and wrap as needed */
+  min-width: 320px;
+  max-width: 520px;
+}
+
+/* Share the same table visuals */
+.tokenomics-table table,
+.vesting-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: var(--ink);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border: 1px solid rgba(229,199,107,.2);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 0 24px rgba(229,199,107,.15);
+}
+
+.tokenomics-table th, .vesting-table th,
+.tokenomics-table td, .vesting-table td {
+  padding: 12px 18px;
+  text-align: center;          /* more natural for text-heavy right table */
+  vertical-align: top;
+}
+
+.tokenomics-table th, .vesting-table th {
+  color: var(--gold);
+  font-weight: 700;
+  border-bottom: 1px solid rgba(229,199,107,.3);
+  background: rgba(0,0,0,.55);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.tokenomics-table tr td, .vesting-table tr td {
+  border-bottom: 1px solid rgba(229,199,107,.15);
+  transition: background .25s ease;
+}
+.tokenomics-table tr:last-child td,
+.vesting-table tr:last-child td { border-bottom: none; }
+
+.tokenomics-table tr:hover td,
+.vesting-table tr:hover td { background: rgba(229,199,107,.05); }
+
+/* Tighten on small screens so it stacks neatly */
+@media (max-width: 980px){
+  .tokenomics-wrapper { gap: 20px; }
 }

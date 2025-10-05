@@ -19,22 +19,18 @@ import worldPng from "./assets/world.png";
 
 /* ─────────────  PLACES (x,y are % of image width/height) ───────────── */
 const PLACES = [
-  { id: 1,  name: "Aary Ulistine",  x: 57, y: 22, info: "A harbor city ringed by ancient fjords and ice caves." },
-  { id: 2,  name: "Emberburn Tundra", x: 25, y: 72, info: "Built at the foot of an active volcano—the heart of obsidian trade." },
-  { id: 3,  name: "Lowlands",       x: 33, y: 36, info: "Fertile plains and the bloodiest fronts of guild wars." },
-  { id: 4,  name: "Impernal City",  x: 82, y: 56, info: "An iron capital beneath the shadow of the Saltoro range." },
-  { id: 5,  name: "Zephyros Isles", x: 55, y: 73, info: "A chain of isles where merchant corsairs ride the wind." },
-  { id: 6,  name: "Glacial Rift",   x: 72, y: 13, info: "Shattered ice chasms hiding arcane crystals." },
-  { id: 7,  name: "Obsidian Muir",  x: 18, y: 85, info: "An ash-blanketed settlement woven with lava tunnels below." },
-  { id: 8,  name: "Ruincel Camp",   x: 50, y: 48, info: "A nomad garrison raised atop long-abandoned ruins." },
-  { id: 9,  name: "Carrowe Tarter", x: 67, y: 80, info: "Treasure-hunters’ hidden base beneath swamp mists." },
-  { id: 10, name: "Shardpeaks",     x: 75, y: 25, info: "A mountain chain of glacial peaks and knife-edge crags." },
-  { id: 11, name: "Frostvale",      x: 62, y: 29, info: "Hunter villages around lakes frozen most of the year." },
-  { id: 12, name: "Embertrench",    x: 10, y: 75, info: "A deep, smoking lava scar wreathed in ash flats." },
-  { id: 13, name: "Saltoro Pass",   x: 20, y: 35, info: "The empire’s lone mountain gateway, bristling with forts." },
-  { id: 14, name: "Zevyros Deep",   x: 38, y: 65, info: "A tempestuous cove famed for whirlpools and storm shrines." },
-  { id: 15, name: "Amber Caravan Road", x: 23, y: 20, info: "An old trade route of salt and amber, dotted with roadside inns." },
-  { id: 16, name: "Whispering Valley",  x: 71, y: 58, info: "A foggy gorge where the wind whistles through narrow clefts." },
+  { id: 1,  name: "Emberburn Tundra", x: 25, y: 72, info: "Built at the foot of an active volcano—the heart of obsidian trade." },
+  { id: 2,  name: "Lowlands",       x: 33, y: 36, info: "Fertile plains and the bloodiest fronts of guild wars." },
+  { id: 3,  name: "Impernal City",  x: 82, y: 56, info: "An iron capital beneath the shadow of the Saltoro range." },
+  { id: 4,  name: "Zephyros Isles", x: 55, y: 73, info: "A chain of isles where merchant corsairs ride the wind." },
+  { id: 5,  name: "Glacial Rift",   x: 72, y: 13, info: "Shattered ice chasms hiding arcane crystals." },
+  { id: 6,  name: "Ruincel Camp",   x: 50, y: 48, info: "A nomad garrison raised atop long-abandoned ruins." },
+  { id: 7,  name: "Carrowe Tarter", x: 67, y: 80, info: "Treasure-hunters’ hidden base beneath swamp mists." },
+  { id: 8,  name: "Shardpeaks",     x: 75, y: 25, info: "A mountain chain of glacial peaks and knife-edge crags." },
+  { id: 9, name: "Embertrench",    x: 10, y: 75, info: "A deep, smoking lava scar wreathed in ash flats." },
+  { id: 10, name: "Zevyros Deep",   x: 38, y: 65, info: "A tempestuous cove famed for whirlpools and storm shrines." },
+  { id: 11, name: "Amber Caravan Road", x: 23, y: 20, info: "An old trade route of salt and amber, dotted with roadside inns." },
+  { id: 12, name: "Whispering Valley",  x: 71, y: 58, info: "A foggy gorge where the wind whistles through narrow clefts." },
 ];
 
 
@@ -315,7 +311,6 @@ setShow(pastThreshold ? true : !aboveHideThreshold && scrollingDown);
 
 function MapInteractive() {
   const [active, setActive] = useState(null);
-  const [legendOpen, setLegendOpen] = useState(false);
 
   const secRef = useRef(null);
   const startedRef = useRef(false);
@@ -323,11 +318,9 @@ function MapInteractive() {
   const hideTimerRef = useRef(null);
   const tourIdxRef = useRef(0);
 
-  // Bölüm görünür olunca otomatik turu başlat (sadece 1 kez)
   useEffect(() => {
     const el = secRef.current;
     if (!el) return;
-
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !startedRef.current) {
@@ -337,7 +330,6 @@ function MapInteractive() {
       },
       { threshold: 0.25 }
     );
-
     io.observe(el);
     return () => io.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -346,24 +338,16 @@ function MapInteractive() {
   const startAutoTour = () => {
     clearInterval(intervalRef.current);
     clearTimeout(hideTimerRef.current);
-
-    // Hemen ilkini göster
     tourIdxRef.current = 0;
     showOneStep();
-
-    // Sonrakiler 2.5 sn aralıkla
     intervalRef.current = setInterval(showOneStep, 2500);
   };
 
   const showOneStep = () => {
     const p = PLACES[tourIdxRef.current];
     setActive(p);
-
-    // 1.4 sn sonra kartı kapat (böylece “açılıp kapandığı için gözükür”)
     clearTimeout(hideTimerRef.current);
     hideTimerRef.current = setTimeout(() => setActive(null), 1400);
-
-    // sıradaki
     tourIdxRef.current = (tourIdxRef.current + 1) % PLACES.length;
   };
 
@@ -372,12 +356,10 @@ function MapInteractive() {
     clearTimeout(hideTimerRef.current);
   };
 
-  // Kullanıcı etkileşimi olursa turu durdur
   const onUserInteract = () => {
     stopAutoTour();
   };
 
-  // Deep-link (?map=Lowlands)
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search);
     const q = sp.get("map");
@@ -389,9 +371,10 @@ function MapInteractive() {
   }, []);
 
   return (
-    <section ref={secRef} className="map-teaser map--scroll">
+    <section ref={secRef} className="map-row section">
+      {/* LEFT: INTERACTIVE MAP */}
       <div
-        className="map-wrap"
+        className="map-wrap map-wrap--redglow"
         onMouseMove={onUserInteract}
         onClick={onUserInteract}
         onTouchStart={onUserInteract}
@@ -413,57 +396,35 @@ function MapInteractive() {
           </button>
         ))}
 
-        {active && (
-          <div
-            className="place-card"
-            style={{ left: `calc(${active.x}% + 1.6rem)`, top: `${active.y}%` }}
-            onMouseLeave={() => setActive(null)}
-            role="dialog"
-            aria-live="polite"
-          >
-            <h4>{active.name}</h4>
-            <p>{active.info}</p>
-          </div>
-        )}
-
-        {/* Regions toggle & panel (biraz daha sola kaydırıldı) */}
-        <button
-          className="regions-toggle"
-          onClick={() => setLegendOpen(v => !v)}
-          aria-expanded={legendOpen}
-          aria-controls="regions-panel"
-          title="Open Regions"
-        >
-          Regions
-        </button>
-
-        <aside id="regions-panel" className={`regions-panel ${legendOpen ? "open" : ""}`}>
-          <header>
-            <h5>Regions</h5>
-            <button className="close-x" onClick={() => setLegendOpen(false)} aria-label="Close">×</button>
-          </header>
-          <ul>
-            {PLACES.map(p => (
-              <li key={p.id}>
-                <button
-                  onClick={() => {
-                    setActive(p);
-                    setLegendOpen(false);
-                    onUserInteract();
-                    tourIdxRef.current = PLACES.findIndex(x => x.id === p.id);
-                  }}
-                >
-                  {p.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </aside>
+   
       </div>
 
+      {/* RIGHT: REGIONS LIST + DETAILS */}
+      <aside className="map-info">
+
+        <ul className="map-info__list">
+          {PLACES.map(p => (
+            <li key={p.id} className={`map-info__item ${active?.id === p.id ? "is-active" : ""}`}>
+              <button
+                className="map-info__btn"
+                onClick={() => {
+                  setActive(p);
+                  onUserInteract();
+                }}
+              >
+                {p.name}
+              </button>
+
+              {/* Show info of the active one inline in the list */}
+              <div className="map-info__desc">{p.info}</div>
+            </li>
+          ))}
+        </ul>
+      </aside>
     </section>
   );
 }
+
 
 export default function App() {
 
@@ -597,17 +558,14 @@ export default function App() {
 
  <MapInteractive/>
 
-      {/* TOKENOMICS */}
+ {/* TOKENOMICS */}
 <section id="tokenomics" className="section section--parchment tokenomics-section">
   <h2 className="section__title">Tokenomics (CRLS)</h2>
 
   <div className="tokenomics-wrapper">
-    {/* Left side: Pie chart image */}
-    <div className="tokenomics-chart">
-      <img src={tokenomicsPie} alt="Tokenomics Chart" loading="lazy" />
-    </div>
+   
 
-    {/* Right side: Allocation table */}
+
     <div className="tokenomics-table">
       <table>
         <thead>
@@ -647,6 +605,50 @@ export default function App() {
             <td><span className="dot gold"></span> Public Sale</td>
             <td>70%</td>
             <td>700,000,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div className="tokenomics-chart">
+      <img src={tokenomicsPie} alt="Tokenomics Chart" loading="lazy" />
+    </div>
+
+
+  
+    <div className="vesting-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Vesting Terms</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Team & Advisors</td>
+            <td>1-year cliff, followed by <strong>48 months</strong> linear vesting</td>
+          </tr>
+          <tr>
+            <td>Community Rewards</td>
+            <td>9-months cliff, followed by <strong>36 months</strong> linear vesting</td>
+          </tr>
+          <tr>
+            <td>Ecosystem & Partnerships</td>
+            <td>1-year cliff, followed by <strong>36 months</strong> linear vesting</td>
+          </tr>
+          <tr>
+            <td>Treasury Reserve</td>
+            <td>1-year cliff, followed by <strong>48 months</strong> linear vesting</td>
+          </tr>
+          <tr>
+            <td>Public Sale</td>
+            <td>
+              3–6-months cliff, followed by <strong>24–36 months</strong> linear vesting
+              <br />
+              <em>(A detailed table to be released in October 2025)</em>
+            </td>
           </tr>
         </tbody>
       </table>
