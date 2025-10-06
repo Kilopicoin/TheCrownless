@@ -1260,3 +1260,127 @@ body{
 @media (max-width: 980px){
   .tokenomics-wrapper { gap: 20px; }
 }
+
+
+/* Right column now holds two cards side-by-side */
+.hero__right {
+  flex: 1 1 640px;
+  max-width: 900px;             /* give room for two cards */
+  display: block;               /* grid inside .side-cards */
+}
+
+.side-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 980px){
+  .side-cards { grid-template-columns: 1fr; } /* stack on smaller screens */
+}
+
+/* Reward card styles (mirrors presale-card) */
+.reward-card {
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border: 1px solid rgba(229,199,107,.25);
+  border-radius: 14px;
+  padding: 22px 18px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(229,199,107,.15);
+}
+
+.reward-card__title {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #fff;
+}
+
+.reward-card__desc {
+  margin: 0 0 16px;
+  font-size: 14px;
+  opacity: .9;
+}
+
+/* Table styling */
+.reward-card__tablewrap {
+  overflow-x: auto;
+  border-radius: 12px;
+}
+
+.reward-card__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: var(--ink);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border: 1px solid rgba(229,199,107,.2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 18px rgba(229,199,107,.12);
+}
+
+.reward-card__table th,
+.reward-card__table td {
+  padding: 10px 12px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(229,199,107,.15);
+}
+
+.reward-card__table thead th {
+  color: var(--gold);
+  font-weight: 700;
+  border-bottom: 1px solid rgba(229,199,107,.3);
+  background: rgba(0,0,0,.55);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+
+.reward-card__table tr:last-child td {
+  border-bottom: none;
+}
+
+.reward-card__table tbody tr:hover td {
+  background: rgba(229,199,107,.05);
+}
+
+/* Footnote */
+.reward-card__note {
+  margin: 10px 0 0;
+  font-size: 12px;
+  opacity: .85;
+  border-left: 3px solid var(--gold);
+  padding: 8px 10px;
+  background: rgba(229,199,107,.06);
+  border-radius: 8px;
+  text-align: left;
+}
+
+
+/* Row layout for hero: 3 columns on wide screens */
+.hero--row {
+  /* was flex —> now grid */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 480px 300px; /* video | card | card */
+  gap: 32px;
+  align-items: start;
+  justify-content: center;
+  padding: 60px 20px;
+  max-width: 1600px;    /* give a bit more room than 1280 if you like */
+  margin: 0 auto;
+}
+
+/* Column wrappers */
+.hero__left { min-width: 0; }   /* allow video to shrink without overflow */
+.hero__col  { min-width: 0; }   /* standardize card columns */
+
+/* The video container can now naturally fill the left column */
+.hero__video-container { width: 100%; }
+
+
+@media (max-width: 1200px) {
+  .hero--row {
+    grid-template-columns: 1fr; /* stack all three */
+  }
+}

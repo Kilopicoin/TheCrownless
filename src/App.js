@@ -17,6 +17,44 @@ import photoGoktug from "./assets/goktug.png";
 import roadmapSign from "./assets/roadmap.png";
 import worldPng from "./assets/world.png";
 
+
+
+function RewardTiersCard() {
+  return (
+    <div className="reward-card">
+      <h2 className="reward-card__title">Reward Tiers</h2>
+      <p className="reward-card__desc">
+        Support the development of the project, reserve your spot, take advantage of the good price, and get special NFT rights.
+      </p>
+
+      <div className="reward-card__tablewrap">
+        <table className="reward-card__table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Cumulative Spend ($)</th>
+              <th>NFT Reward</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>100 – 499</td><td>Tier 1 NFT</td></tr>
+            <tr><td>2</td><td>500 – 1,999</td><td>Tier 2 NFT</td></tr>
+            <tr><td>3</td><td>2,000 – 6,999</td><td>Tier 3 NFT</td></tr>
+            <tr><td>4</td><td>7,000 – 19,999</td><td>Tier 4 NFT</td></tr>
+            <tr><td>5</td><td>20,000 – 49,999</td><td>Tier 5 NFT</td></tr>
+            <tr><td>Premium</td><td>50,000 – 100,000</td><td>Premium NFT</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p className="reward-card__note">
+        * Tier is based on your <strong>cumulative</strong> spending during the pre-sale.
+      </p>
+    </div>
+  );
+}
+
+
 /* ─────────────  PLACES (x,y are % of image width/height) ───────────── */
 const PLACES = [
   { id: 1,  name: "Emberburn Tundra", x: 25, y: 72, info: "Built at the foot of an active volcano—the heart of obsidian trade." },
@@ -456,8 +494,8 @@ export default function App() {
   </div>
 </div>
 
-
- <section className="hero hero--row">
+<section className="hero hero--row">
+  {/* Col 1: video */}
   <div className="hero__left">
     <div className="hero__video-container">
       <video
@@ -481,30 +519,19 @@ export default function App() {
 
     {/* Socials under the video */}
     <div className="hero__socials-row">
-  <span className="hero__socials-label">Follow The Socials to Stay Updated</span>
-  <div className="hero__socials">
-    <a href="https://x.com/thecrownlessx" className="twitter" target="_blank" rel="noreferrer">
-      <i className="fab fa-twitter"></i>
-    </a>
-    <a href="https://www.youtube.com/@thecrownlessX" className="youtube" target="_blank" rel="noreferrer">
-      <i className="fab fa-youtube"></i>
-    </a>
-    <a href="https://www.linkedin.com/company/the-crownless/?viewAsMember=true" className="linkedin" target="_blank" rel="noreferrer">
-      <i className="fab fa-linkedin"></i>
-    </a>
-    <a href="https://www.instagram.com/the.crownless.game" className="instagram" target="_blank" rel="noreferrer">
-      <i className="fab fa-instagram"></i>
-    </a>
-    <a href="https://medium.com/@thecrownlessx" className="medium" target="_blank" rel="noreferrer">
-      <i className="fab fa-medium"></i>
-    </a>
-  </div>
-</div>
-
+      <span className="hero__socials-label">Follow The Socials to Stay Updated</span>
+      <div className="hero__socials">
+        <a href="https://x.com/thecrownlessx" className="twitter" target="_blank" rel="noreferrer"><i className="fab fa-twitter"></i></a>
+        <a href="https://www.youtube.com/@thecrownlessX" className="youtube" target="_blank" rel="noreferrer"><i className="fab fa-youtube"></i></a>
+        <a href="https://www.linkedin.com/company/the-crownless/?viewAsMember=true" className="linkedin" target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/the.crownless.game" className="instagram" target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
+        <a href="https://medium.com/@thecrownlessx" className="medium" target="_blank" rel="noreferrer"><i className="fab fa-medium"></i></a>
+      </div>
+    </div>
   </div>
 
-  {/* Presale card on the right */}
-  <div className="hero__right">
+  {/* Col 2: Join the Presale */}
+  <div className="hero__col">
     <div className="presale-card">
       <h2 className="presale-card__title">Join the Presale</h2>
       <p className="presale-card__desc">
@@ -520,7 +547,13 @@ export default function App() {
       </a>
     </div>
   </div>
+
+  {/* Col 3: Reward Tiers */}
+  <div className="hero__col">
+    <RewardTiersCard />
+  </div>
 </section>
+
 
 
 
@@ -647,7 +680,6 @@ export default function App() {
             <td>
               3–6-months cliff, followed by <strong>24–36 months</strong> linear vesting
               <br />
-              <em>(A detailed table to be released in October 2025)</em>
             </td>
           </tr>
         </tbody>
