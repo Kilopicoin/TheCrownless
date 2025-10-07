@@ -73,11 +73,11 @@ body{
 .hero__content { position: absolute; z-index: 1; }
 
 .hero__title{
-  margin:0; font-size:clamp(15px, 5vw, 32px); line-height:1.1; letter-spacing:.5px;
+  margin:0; font-size:clamp(15px, 5vw, 24px); line-height:1.1; letter-spacing:.5px;
   color:var(--gold); text-shadow:0 2px 18px rgba(229,199,107,.12);
 }
 .hero__subtitle{
-  max-width:900px; opacity:.9; font-size:clamp(14px, 2.2vw, 18px)
+  max-width:900px; opacity:.9; font-size:clamp(12px, 2.2vw, 15px)
 }
 .hero__cta{display:flex; gap:12px; flex-wrap:wrap; justify-content:center}
 .crest{width:160px; opacity:.9; margin-top:16px}
@@ -193,7 +193,7 @@ body{
 }
 
 /* Left / right widths */
-.hero__left  { flex: 1 1 720px; max-width: 900px; min-width: 0; }
+.hero__left  { flex: 1 1 720px; min-width: 0; }
 .hero__right { flex: 1 1 300px; max-width: 400px; display:flex; justify-content:center; }
 
 /* Video container */
@@ -1322,7 +1322,7 @@ body{
 
 .reward-card__table th,
 .reward-card__table td {
-  padding: 10px 12px;
+  padding: 9px 12px;
   text-align: center;
   vertical-align: middle;
   border-bottom: 1px solid rgba(229,199,107,.15);
@@ -1333,7 +1333,6 @@ body{
   font-weight: 700;
   border-bottom: 1px solid rgba(229,199,107,.3);
   background: rgba(0,0,0,.55);
-  text-transform: uppercase;
   letter-spacing: .4px;
 }
 
@@ -1354,7 +1353,7 @@ body{
   padding: 8px 10px;
   background: rgba(229,199,107,.06);
   border-radius: 8px;
-  text-align: left;
+  text-align: center;
 }
 
 
@@ -1362,9 +1361,9 @@ body{
 .hero--row {
   /* was flex —> now grid */
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 480px 300px; /* video | card | card */
+  grid-template-columns: minmax(0, 1fr) 480px 330px; /* video | card | card */
   gap: 32px;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   padding: 60px 20px;
   max-width: 1600px;    /* give a bit more room than 1280 if you like */

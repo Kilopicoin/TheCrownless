@@ -37,18 +37,18 @@ function RewardTiersCard() {
             </tr>
           </thead>
           <tbody>
-            <tr><td>1</td><td>100 – 499</td><td>Tier 1 NFT</td></tr>
-            <tr><td>2</td><td>500 – 1,999</td><td>Tier 2 NFT</td></tr>
-            <tr><td>3</td><td>2,000 – 6,999</td><td>Tier 3 NFT</td></tr>
-            <tr><td>4</td><td>7,000 – 19,999</td><td>Tier 4 NFT</td></tr>
-            <tr><td>5</td><td>20,000 – 49,999</td><td>Tier 5 NFT</td></tr>
-            <tr><td>Premium</td><td>50,000 – 100,000</td><td>Premium NFT</td></tr>
+            <tr><td>1</td><td>min: 100<br/>max: 499</td><td>Tier 1 NFTs</td></tr>
+            <tr><td>2</td><td>min: 500<br/>max: 1,999</td><td>Tier 2 NFTs</td></tr>
+            <tr><td>3</td><td>min: 2,000<br/>max: 6,999</td><td>Tier 3 NFTs</td></tr>
+            <tr><td>4</td><td>min: 7,000<br/>max: 19,999</td><td>Tier 4 NFTs</td></tr>
+            <tr><td>5</td><td>min: 20,000<br/>max: 49,999</td><td>Tier 5 NFTs</td></tr>
+            <tr><td>Premium</td><td>min: 50,000<br/>max: 100,000</td><td>Premium NFTs</td></tr>
           </tbody>
         </table>
       </div>
 
       <p className="reward-card__note">
-        * Tier is based on your <strong>cumulative</strong> spending during the pre-sale.
+        Tier is based on your <strong>cumulative</strong> spending during the pre-sale.
       </p>
     </div>
   );
@@ -189,10 +189,10 @@ const TEAM = [
     blurb: "Game vision, core mechanics",
     photo: photoCem,
     socials: [
-      { type: "twitter", url: "https://twitter.com/yourcem" },
-      { type: "linkedin", url: "https://linkedin.com/in/yourcem" },
-      { type: "youtube", url: "https://youtube.com/@yourcem" },
-      { type: "github", url: "https://github.com/yourcem" },
+      { type: "twitter", url: "https://x.com/kilopi3142_" },
+      { type: "linkedin", url: "https://www.linkedin.com/in/cem-tosun-45979871/" },
+      { type: "youtube", url: "https://www.youtube.com/@cemtosun_/videos" },
+      { type: "github", url: "https://github.com/Kilopi3142" },
     ],
   },
   {
@@ -201,9 +201,9 @@ const TEAM = [
     blurb: "Game mechanics, Web3 systems",
     photo: photoBilal,
     socials: [
-      { type: "twitter", url: "https://twitter.com/yourbilal" },
-      { type: "linkedin", url: "https://linkedin.com/in/yourbilal" },
-      { type: "youtube", url: "https://youtube.com/@yourbilal" },
+      { type: "twitter", url: "https://x.com/BilalTekmil25" },
+      { type: "linkedin", url: "https://www.linkedin.com/in/bilaltekmil3425/" },
+      { type: "youtube", url: "https://www.youtube.com/@BilalTekmil/videos" },
     ],
   },
   {
@@ -212,8 +212,8 @@ const TEAM = [
     blurb: "Visual style, concept art, identity",
     photo: photoMesut,
     socials: [
-      { type: "twitter", url: "https://twitter.com/yourmesut" },
-      { type: "youtube", url: "https://youtube.com/@yourmesut" },
+      { type: "twitter", url: "https://x.com/mesut_ivy" },
+      { type: "youtube", url: "https://www.youtube.com/@kriptoofis" },
     ],
   },
   {
@@ -222,7 +222,7 @@ const TEAM = [
     blurb: "Architecture, technical feasibility",
     photo: photoNecdet,
     socials: [
-      { type: "twitter", url: "https://twitter.com/yournecdet" },
+      { type: "twitter", url: "https://x.com/oncegil" },
     ],
   },
   {
@@ -231,7 +231,7 @@ const TEAM = [
     blurb: "Timeline planning, cross-team coordination",
     photo: photoKivilcim,
     socials: [
-      { type: "twitter", url: "https://twitter.com/yourkivilcim" },
+      { type: "twitter", url: "https://x.com/kivilgym" },
     ],
   },
   {
@@ -240,7 +240,7 @@ const TEAM = [
     blurb: "Community growth, analytics, visibility",
     photo: photoOmer,
     socials: [
-      { type: "twitter", url: "https://twitter.com/youromer" },
+      { type: "twitter", url: "https://x.com/0xr1chie" },
     ],
   },
   {
@@ -249,7 +249,7 @@ const TEAM = [
     blurb: "Partnerships, investor & partner relations",
     photo: photoGoktug,
     socials: [
-      { type: "twitter", url: "https://twitter.com/yourgoktug" },
+      { type: "twitter", url: "https://x.com/Goktug1O" },
     ],
   },
 ];
@@ -792,7 +792,7 @@ export default function App() {
         <li><a href="https://www.youtube.com/@thecrownlessX" target="_blank" rel="noreferrer"><i className="fab fa-youtube" /> YouTube</a></li>
         <li><a href="https://www.linkedin.com/company/the-crownless/" target="_blank" rel="noreferrer"><i className="fab fa-linkedin" /> LinkedIn</a></li>
         <li><a href="https://www.instagram.com/the.crownless.game" target="_blank" rel="noreferrer"><i className="fab fa-instagram" /> Instagram</a></li>
-        <li><a href="https://t.me/" target="_blank" rel="noreferrer"><i className="fab fa-medium" /> Medium</a></li>
+        <li><a href="https://medium.com/@thecrownlessx" target="_blank" rel="noreferrer"><i className="fab fa-medium" /> Medium</a></li>
       </ul>
     </div>
 
