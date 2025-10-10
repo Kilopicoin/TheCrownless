@@ -254,6 +254,177 @@ const TEAM = [
   },
 ];
 
+
+const ROUND_LABELS = [
+  "Lore & Worldbuilding", "Visual Identity & Branding",
+  "Game Systems Design", "UI/UX Foundations",
+  "Core Infrastructure & Backend", "Crafting Mini-Game",
+  "Social & Identity System", "Exploration Mechanics",
+  "NFT System Integration", "PvE Combat Core",
+  "Trading & Economy Layer", "PvP Mini-Game",
+  "Event & Dynamic World System", "Housing & Ownership Systems",
+  "Full MMO Integration", "Alpha Testing & Launch Prep"
+];
+
+// === Rounds (from your image) ===
+const ROUND_PRICES_USD = [
+  0.0075, 0.0080, 0.0085, 0.0090,
+  0.0095, 0.0100, 0.0105, 0.0110,
+  0.0115, 0.0120, 0.0125, 0.0130,
+  0.0135, 0.0140, 0.0145, 0.0150, 30
+];
+
+
+// Targets in USD (18 decimals) per round (precalculated to avoid float drift)
+const ROUND_TARGETS = [
+  75000n, 116000n, 161500n, 211500n,
+  266000n, 325000n, 388500n, 456500n,
+  529000n, 606000n, 687500n, 773500n,
+  864000n, 959000n, 1058500n, 1162500n
+].map(v => v * 10n ** 18n); // 18 decimals
+
+
+
+
+function PresaleCardEnhanced({
+  wallet = "0x4686fB8ea6b6230eC6153dc6347ea1514646100c",
+  referralLink = "https://thecrownless.com/token?ref=0x4686fB8ea6b6230eC6153dc6347ea1514646100c",
+  listingPriceUsd = 0.03,
+  totalGoalUsd = 8640000,           // overall cap displayed under the bar
+  raisedUsd = 871.8,                // demo value; wire to live data if you have it
+  onContribute,                     // optional callback({network, asset, amount, referral})
+}) {
+  // demo state; pull from your backend / wallet later
+  const [round, setRound] = React.useState(1); // 1..16
+  const [network, setNetwork] = React.useState("BNB Chain");
+  const [asset, setAsset] = React.useState("USDC (BEP20)");
+  const [referral, setReferral] = React.useState("");
+  const [amount, setAmount] = React.useState("");
+
+  const minUsd = 100;
+  const maxUsd = 100000;
+
+  // guard
+  const roundIdx = Math.min(Math.max(round - 1, 0), 15);
+  const currentPrice = ROUND_PRICES_USD[roundIdx] ?? 0.0075;
+
+  // if you keep per-round goals, compute progress against current target; otherwise global %
+  const roundTargetWei = ROUND_TARGETS[roundIdx] ?? 0n;
+  const roundTargetUsd = Number(roundTargetWei / (10n ** 18n)); // stored as 18d
+  const roundPercent =
+    roundTargetUsd > 0 ? Math.min(100, (raisedUsd / roundTargetUsd) * 100) : 0;
+
+  const prevRound = () => setRound((r) => Math.max(1, r - 1));
+  const nextRound = () => setRound((r) => Math.min(16, r + 1));
+
+  const doContribute = () => {
+    if (!amount || isNaN(+amount)) return alert("Enter a valid USDC amount.");
+    if (+amount < minUsd || +amount > maxUsd) {
+      return alert(`Amount must be between ${minUsd} and ${maxUsd} USDC.`);
+    }
+    onContribute?.({ network, asset, amount: +amount, referral });
+  };
+
+  const fmt = (v) =>
+    v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  return (
+    <div className="presale-card presale-ui">
+      <h2 className="presale-ui__title">CRLS Pre-Sale</h2>
+
+      <div className="presale-ui__sub">
+        <span>Round: <strong>{round}/16</strong> → {ROUND_LABELS[roundIdx]}</span>
+      </div>
+
+      <div className="presale-ui__prices">
+        <div className="pair">
+          <span className="k">Current Price:</span>
+          <span className="v">${currentPrice.toFixed(4)}</span>
+        </div>
+        <div className="pair">
+          <span className="k">Listing Price:</span>
+          <span className="v">${listingPriceUsd.toFixed(2)}</span>
+        </div>
+      </div>
+
+      {/* progress / round switcher */}
+      <div className="presale-ui__progress">
+        <button className="step-btn" onClick={prevRound} aria-label="Prev round">← Prev. Round</button>
+
+        <div className="bar">
+          <div className="fill" style={{ width: `${roundPercent}%` }} />
+          <div className="bar-label">
+            Round {round}: {roundPercent.toFixed(2)}%
+          </div>
+        </div>
+
+        <button className="step-btn step-btn--right" onClick={nextRound} aria-label="Next round">
+          Next Round →
+        </button>
+      </div>
+
+      <div className="presale-ui__raised">
+        USD Raised: <strong>${fmt(raisedUsd)}</strong> / ${fmt(totalGoalUsd)}
+      </div>
+
+      <div className="presale-ui__form">
+        <div className="field two">
+          <select value={network} onChange={(e) => setNetwork(e.target.value)} className="field__input">
+            <option>Network: BNB Chain</option>
+            {/* <option>Ethereum</option>  add others if/when needed */}
+          </select>
+        </div>
+
+        <div className="field two">
+          <select value={asset} onChange={(e) => setAsset(e.target.value)} className="field__input">
+            <option>Asset: USDC (BEP20)</option>
+            <option>Asset: USDT (BEP20)</option>
+            {/* <option>USDT (BEP20)</option> */}
+          </select>
+        </div>
+
+        <div className="field">
+          <input
+            className="field__input"
+            placeholder="Referral address (optional)"
+            value={referral}
+            onChange={(e) => setReferral(e.target.value)}
+          />
+        </div>
+
+        <div className="field">
+          <input
+            className="field__input"
+            placeholder="Amount (min:100 max:100.000)"
+            inputMode="decimal"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </div>
+
+        <button className="btn btn--primary presale-ui__cta" onClick={doContribute}>
+          Contribute with USDC
+        </button>
+      </div>
+
+      <div className="presale-ui__wallet">
+        <div className="k">Connected Wallet:</div>
+        <div className="v">{wallet}</div>
+      </div>
+
+      <div className="presale-ui__ref">
+        <div className="k">Your Referral link</div>
+        <a className="link" href={referralLink} target="_blank" rel="noreferrer">
+          {referralLink}
+        </a>
+      </div>
+    </div>
+  );
+}
+
+
+
+
 function TeamCard({ name, role, blurb, photo, socials }) {
   return (
     <article className="team-card">
@@ -530,23 +701,11 @@ export default function App() {
     </div>
   </div>
 
-  {/* Col 2: Join the Presale */}
-  <div className="hero__col">
-    <div className="presale-card">
-      <h2 className="presale-card__title">Join the Presale</h2>
-      <p className="presale-card__desc">
-        Secure your spot in <em>The Crownless</em> economy. Early supporters gain access to exclusive rewards and phases.
-      </p>
-      <a
-        className="btn btn--primary"
-        href="https://thecrownless.com/token"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Enter Presale
-      </a>
-    </div>
-  </div>
+ {/* Col 2: Pre-sale card */}
+<div className="hero__col">
+  <PresaleCardEnhanced />
+</div>
+
 
   {/* Col 3: Reward Tiers */}
   <div className="hero__col">
